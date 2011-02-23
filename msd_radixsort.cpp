@@ -45,6 +45,9 @@ inline void msd_distr_to_buckets(uchar **begin, uint size,
 		begin[bucket_index[oracle[i]]++] = sorted[i];
 	}
 }
+uchar **sorted;
+ushort *oracle2;
+uchar *oracle;
 } //empty namespace
 
 void msd_radixsort(uchar ** begin, size_t size, uint lcp)
@@ -53,8 +56,6 @@ void msd_radixsort(uchar ** begin, size_t size, uint lcp)
 		sqsort((const uchar**)begin, size, lcp);
 		return;
 	}
-	uchar *__restrict__ oracle = new uchar[size];
-	uchar *__restrict__ *sorted = new uchar*[size];
 	uint bucket_size[0x100] = {0};
 	for(uint i = 0; i < size; ++i)
 		oracle[i] = begin[i][lcp];
@@ -63,8 +64,6 @@ void msd_radixsort(uchar ** begin, size_t size, uint lcp)
 	msd_distr_to_buckets(begin, size, sorted, oracle, bucket_size, bucket_index,
 											 0x100);
 
-	delete [] sorted;
-	delete [] oracle;
 	int bsum = bucket_size[0];
 	++lcp;
 	for(int i = 1; i < 0x100; ++i) {
@@ -78,22 +77,18 @@ void msd_radixsort2(uchar **begin, size_t size, uint lcp)
 {
 	uint *__restrict__ bucket_size = new uint[0x10000];
 	std::fill(bucket_size, bucket_size + 0x10000, 0);
-	uchar **sorted = new uchar*[size];
-	ushort *oracle = new ushort[size];
 	for(uint i = 0; i < size; ++i) {
 		ushort pair = begin[i][lcp];
 		pair <<= 8;
 		if (pair != 0) pair |=	begin[i][lcp+1];
 		
-		oracle[i] = pair;
+		oracle2[i] = pair;
 	}
 	static int bucket_index[0x10000];
 
-	msd_distr_to_buckets(begin, size, sorted, oracle, bucket_size, bucket_index,
+	msd_distr_to_buckets(begin, size, sorted, oracle2, bucket_size, bucket_index,
 											 0x10000);
 
-	delete [] oracle;
-	delete [] sorted;
 	lcp += 2;
 	int bsum = bucket_size[0];
 	for(uint i = 1; i < 0x10000; ++i) {
@@ -108,6 +103,13 @@ void msd_radixsort2(uchar **begin, size_t size, uint lcp)
 }
 
 void msd_radixsort(uchar **begin, size_t size) {
+	sorted = new uchar*[size];
+	oracle = new uchar[size];
+	oracle2 = new ushort[size];
 	if(size >= SUPER_ALPHABET_LIMIT) msd_radixsort2(begin, size, 0);
 	else msd_radixsort(begin, size, 0);
+
+	delete[] sorted;
+	delete[] oracle;
+	delete[] oracle2;
 }
