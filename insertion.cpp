@@ -14,9 +14,7 @@ using namespace std;
  * @param n    number of strings in arr
  * @param lcp  known lcp between all strings between arr
  */
-void insertionSort(const uchar** arr, size_t n, int lcp) {
-	size_t lcps[ISORT_SIZE];
-	assert(n < ISORT_SIZE);
+void insertionSort(const uchar** arr, size_t n, int lcp, uint *lcps) {
 	for(size_t i=0; i<n; ++i) {
 		const uchar* cur = arr[i];
 //		cout<<"inserting "<<cur<<'\n';
@@ -24,9 +22,9 @@ void insertionSort(const uchar** arr, size_t n, int lcp) {
 		size_t j;
 		for(j=i; j; --j) {
 			size_t pl = l;
-			if (lcps[j-1]<l || !lcpCmp(cur, arr[j-1], &l)) {
+			if (lcps[j]<pl || !lcpCmp(cur, arr[j-1], &l)) {
 //				cout<<"breaking: "<<lcps[j-1]<<' '<<l<<' '<<arr[j-1]<<'\n';
-				if (lcps[j-1]>=pl) lcps[j-1] = l;
+				if (lcps[j]>=pl) lcps[j] = l;
 				l=pl;
 				assert(!cmp(cur, arr[j-1]));
 				break;
@@ -34,14 +32,20 @@ void insertionSort(const uchar** arr, size_t n, int lcp) {
 //			cout<<"pushing before "<<l<<" : "<<arr[j-1]<<'\n';
 			assert(cmp(cur, arr[j-1]));
 			arr[j] = arr[j-1];
-			lcps[j] = lcps[j-1];
+			lcps[j+1] = lcps[j];
 		}
 //		cout<<"pos: "<<j<<" ; "<<l<<'\n';
 		assert(j==i || cmp(cur, arr[j+1]));
 		assert(j==0 || !cmp(cur, arr[j-1]));
 		arr[j] = cur;
-		lcps[j] = l;
+		lcps[j+1] = l;
 	}
+}
+
+void insertionSort(const uchar** arr, size_t n, int lcp) {
+	uint lcps[ISORT_SIZE];
+	assert(n < ISORT_SIZE);
+	insertionSort(arr, n, lcp, lcps);
 }
 
 #else

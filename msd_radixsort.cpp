@@ -7,7 +7,7 @@ void sqsort(const uchar** arr, size_t n, size_t lcp);
 
 namespace {
 
-// Limits for reverting to insertion/qsort
+// Limits for reverting to qsort/normal alphabet
 const uint RADIX_LIMIT = 100;
 const uint SUPER_ALPHABET_LIMIT = 1 << 14;
 

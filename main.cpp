@@ -13,6 +13,7 @@ void burstsort(uchar** arr, size_t n);
 void sqsort(uchar** arr, size_t n);
 void insertionSort(uchar** arr, size_t n);
 void msd_radixsort(uchar** arr, size_t n);
+void merge_sort(uchar** arr, size_t n);
 
 uchar* readfile(const char* name, size_t* plen) {
 	ifstream in(name);
@@ -57,6 +58,7 @@ struct Algo {
 	{burstsort, "bs", "burstsort"},
 	{sqsort, "qs", "string quicksort"},
 	{msd_radixsort, "rs", "msd radixsort"},
+	{merge_sort, "ms", "merge sort"},
 	{stdsort, "std", "std::sort"}
 //	{insertionSort, "is", "insertion sort"}
 };
@@ -94,7 +96,8 @@ int main(int argc, char* argv[])
 		algo.sort(ptrs, cnt);
 		clock_t end = clock();
 
-		cout<<fixed<<"Sorted "<<cnt<<" strings in time "<<double(end-start)/CLOCKS_PER_SEC<<" with "<<algo.name<<'\n';
+		cout<<fixed<<"Sorted "<<cnt<<" strings in time "
+				<<double(end-start)/CLOCKS_PER_SEC<<" with "<<algo.name<<'\n';
 //		cout<<start<<' '<<end<<'\n';
 
 //		for(size_t i=0; i<cnt; ++i) cout<<ptrs[i]<<'\n';
@@ -102,7 +105,8 @@ int main(int argc, char* argv[])
 		for(size_t i=1; i<cnt; ++i) {
 			if (cmp(ptrs[i],ptrs[i-1])) {
 				cout<<"sorting failed at position "<<i<<'\n';
-				for(size_t j=max(i,size_t(5))-5; j<min(i+5,cnt); ++j) cout<<j<<' '<<ptrs[j]<<'\n';
+				for(size_t j=max(i,size_t(5))-5; j<min(i+5,cnt); ++j)
+					cout<<j<<' '<<ptrs[j]<<'\n';
 				abort();
 			}
 		}
