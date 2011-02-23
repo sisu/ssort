@@ -14,4 +14,4 @@ set(tsources test.cpp burst.cpp sqs.cpp insertion.cpp)
 #MESSAGE( STATUS "flags : ${OPENGL_LIBRARY}" )
 
 add_executable(ssort ${sources})
-add_executable(test ${tsources})
+#add_executable(test ${tsources})
