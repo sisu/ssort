@@ -1,7 +1,9 @@
+// -*- indent-tabs-mode: t -*-
 #pragma once
 #include <cstddef>
 
 typedef unsigned char uchar;
+typedef unsigned int uint;
 
 inline bool cmp(const uchar* a, const uchar* b) {
 	size_t x=0;

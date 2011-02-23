@@ -1,3 +1,4 @@
+// -*- indent-tabs-mode: t -*-
 #pragma once
 #include <cstddef>
 const size_t ISORT_SIZE = 16;

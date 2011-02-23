@@ -1,3 +1,4 @@
+// -*- indent-tabs-mode: t -*-
 #include <algorithm>
 #include <cassert>
 #include <cstring>

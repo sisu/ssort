@@ -1,3 +1,4 @@
+// -*- indent-tabs-mode: t -*-
 #include <iostream>
 #include <exception>
 #include <stdexcept>

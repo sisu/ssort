@@ -8,10 +8,9 @@ project(ssort)
 add_definitions("-Wall -O3 -DNDEBUG")
 #add_definitions("-Wall -O3 -DNDEBUG -pg")
 
-set(sources main.cpp burst.cpp sqs.cpp insertion.cpp)
+set(sources main.cpp burst.cpp sqs.cpp insertion.cpp msd_radixsort.cpp)
 set(tsources test.cpp burst.cpp sqs.cpp insertion.cpp)
 
-#MESSAGE( STATUS "flags : ${OPENGL_LIBRARY}" )
 
 add_executable(ssort ${sources})
 #add_executable(test ${tsources})

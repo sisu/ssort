@@ -1,3 +1,4 @@
+// -*- indent-tabs-mode: t -*-
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -11,6 +12,7 @@ using namespace std;
 void burstsort(uchar** arr, size_t n);
 void sqsort(uchar** arr, size_t n);
 void insertionSort(uchar** arr, size_t n);
+void msd_radixsort(uchar** arr, size_t n);
 
 uchar* readfile(const char* name, size_t* plen) {
 	ifstream in(name);
@@ -54,6 +56,7 @@ struct Algo {
 } algos[] = {
 	{burstsort, "bs", "burstsort"},
 	{sqsort, "qs", "string quicksort"},
+	{msd_radixsort, "rs", "msd radixsort"},
 	{stdsort, "std", "std::sort"}
 //	{insertionSort, "is", "insertion sort"}
 };

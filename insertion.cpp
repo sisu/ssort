@@ -1,3 +1,4 @@
+// -*- indent-tabs-mode: t -*-
 #include "common.hpp"
 #include "insertion.hpp"
 #include <iostream>

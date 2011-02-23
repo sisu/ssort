@@ -1,3 +1,4 @@
+// -*- indent-tabs-mode: t -*-
 #pragma once
 #include "common.hpp"
 
