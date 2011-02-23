@@ -21,9 +21,10 @@ uchar* readfile(const char* name, size_t* plen) {
 	in.seekg(0, ios::end);
 	size_t len = in.tellg();
 	in.seekg(0, ios::beg);
-	uchar* buf = new uchar[len];
+	uchar* buf = new uchar[len+1];
 	in.read((char*)buf, len);
 	*plen = len;
+	buf[len] = 0;
 	return buf;
 }
 uchar** splitString(uchar* str, size_t len, size_t* pcnt) {
@@ -73,30 +74,42 @@ int main(int argc, char* argv[])
 		}
 	}
 	Algo algo = algos[0];
+	bool suffix=0;
 	for(int i=1; i<argc; ++i) {
-		if (i==1) {
-			bool change=0;
-			for(size_t j=0; j<sizeof(algos)/sizeof(algos[0]); ++j) {
-				Algo a = algos[j];
-				if (!strcmp(argv[i], a.sname)) {
-					algo = a;
-					change=1;
-					break;
-				}
+		bool change=0;
+		for(size_t j=0; j<sizeof(algos)/sizeof(algos[0]); ++j) {
+			Algo a = algos[j];
+			if (!strcmp(argv[i], a.sname)) {
+				algo = a;
+				change=1;
+				break;
 			}
-			if (change) continue;
 		}
+		if (!strcmp(argv[i], "s")) {
+			suffix=1;
+			change=1;
+		}
+		if (change) continue;
+
 		size_t len;
 		uchar* buf = readfile(argv[i], &len);
 		size_t cnt;
-		uchar** ptrs = splitString(buf, len, &cnt);
+		uchar** ptrs;
+		if (suffix) {
+			cnt = len;
+			ptrs = new uchar*[len];
+			for(size_t i=0; i<len; ++i)
+				ptrs[i] = buf;
+		} else {
+			ptrs = splitString(buf, len, &cnt);
+		}
 //		for(size_t i=0; i<cnt; ++i) cout<<ptrs[i]<<'\n';
 
 		clock_t start = clock();
 		algo.sort(ptrs, cnt);
 		clock_t end = clock();
 
-		cout<<fixed<<"Sorted "<<cnt<<" strings in time "
+		cout<<fixed<<"Sorted "<<cnt<<' '<<(suffix?"suffixes":"strings")<<" in time "
 				<<double(end-start)/CLOCKS_PER_SEC<<" with "<<algo.name<<'\n';
 //		cout<<start<<' '<<end<<'\n';
 
