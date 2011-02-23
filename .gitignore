@@ -1,0 +1,6 @@
+*.o
+CMakeFiles*
+ssort
+CMakeCache.txt
+cmake_install.cmake
+*~
