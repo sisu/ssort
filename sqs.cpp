@@ -14,7 +14,7 @@ using namespace std;
  * @param resA pointer where we store the number of elements less than p
  * @param resB pointer where we store the number of elements <= p
  */
-void partition3(const uchar** arr, size_t n, uchar p, int l, size_t* resA, size_t* resB) {
+void partition3(const uchar** arr, size_t n, uchar p, size_t l, size_t* resA, size_t* resB) {
 	size_t a=0;
 	while(a<n && arr[a][l]<p) ++a;
 	size_t b=a;

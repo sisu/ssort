@@ -56,7 +56,8 @@ void msd_radixsort(uchar ** begin, size_t size, uint lcp)
 		sqsort((const uchar**)begin, size, lcp);
 		return;
 	}
-	uint bucket_size[0x100] = {0};
+	uint *__restrict__ bucket_size = new uint[0x100];
+	std::fill(bucket_size, bucket_size + 0x100, 0);
 	for(uint i = 0; i < size; ++i)
 		oracle[i] = begin[i][lcp];
 	static int bucket_index[0x100];
@@ -71,6 +72,7 @@ void msd_radixsort(uchar ** begin, size_t size, uint lcp)
 		msd_radixsort(begin + bsum, bucket_size[i], lcp);
 		bsum += bucket_size[i];
 	}
+	delete[] bucket_size;
 }
 
 void msd_radixsort2(uchar **begin, size_t size, uint lcp)
