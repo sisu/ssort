@@ -27,7 +27,7 @@ struct Vector {
 		return arr[i];
 	}
 	void clear() {
-		delete[] arr;
+		free(arr);
 		arr=0;
 		csize=msize=0;
 	}
