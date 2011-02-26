@@ -115,14 +115,18 @@ int main(int argc, char* argv[])
 
 //		for(size_t i=0; i<cnt; ++i) cout<<ptrs[i]<<'\n';
 
+		size_t dp=0;
 		for(size_t i=1; i<cnt; ++i) {
-			if (cmp(ptrs[i],ptrs[i-1])) {
+			size_t l=0;
+			if (lcpCmp(ptrs[i],ptrs[i-1], &l)) {
 				cout<<"sorting failed at position "<<i<<'\n';
 				for(size_t j=max(i,size_t(5))-5; j<min(i+5,cnt); ++j)
 					cout<<j<<' '<<ptrs[j]<<'\n';
 				abort();
 			}
+			dp += l;
 		}
+		cout<<"dp: "<<dp<<'\n';
 
 		delete[] buf;
 		delete[] ptrs;

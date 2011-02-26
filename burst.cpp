@@ -10,6 +10,7 @@ typedef unsigned char uchar;
 
 /** Size of the alphabet used in the burst trie. */
 int ASIZE = 256;
+void msd_radixsort(uchar **begin, size_t size);
 
 /** Contains a node of a burst trie of strings.
  * A node contains either a bucket of strings 
@@ -66,7 +67,11 @@ struct BurstTrie {
 				*out++ = bucket[i];
 			}
 //			sort(out0, out, cmp);
-			sqsort(out0, out-out0);
+			if (out-out0 > 100 && 0) {
+				msd_radixsort((uchar**)out0, out-out0);
+			} else {
+				sqsort(out0, out-out0);
+			}
 			for(const uchar** i=out0; i!=out; ++i) *i-= level;
 		}
 		return out;
