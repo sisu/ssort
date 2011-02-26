@@ -104,12 +104,24 @@ void msd_radixsort2(uchar **begin, size_t size, uint lcp)
 	delete[] bucket_size;
 }
 
-void msd_radixsort(uchar **begin, size_t size) {
+void msd_radixsort_super(uchar **begin, size_t size) {
 	sorted = new uchar*[size];
 	oracle = new uchar[size];
 	oracle2 = new ushort[size];
 	if(size >= SUPER_ALPHABET_LIMIT) msd_radixsort2(begin, size, 0);
 	else msd_radixsort(begin, size, 0);
+
+	delete[] sorted;
+	delete[] oracle;
+	delete[] oracle2;
+}
+
+
+void msd_radixsort(uchar **begin, size_t size) {
+	sorted = new uchar*[size];
+	oracle = new uchar[size];
+	oracle2 = new ushort[size];
+	msd_radixsort(begin, size, 0);
 
 	delete[] sorted;
 	delete[] oracle;

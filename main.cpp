@@ -13,6 +13,7 @@ void burstsort(uchar** arr, size_t n);
 void sqsort(uchar** arr, size_t n);
 void insertionSort(uchar** arr, size_t n);
 void msd_radixsort(uchar** arr, size_t n);
+void msd_radixsort_super(uchar** arr, size_t n);
 void merge_sort(uchar** arr, size_t n);
 
 uchar* readfile(const char* name, size_t* plen) {
@@ -58,6 +59,7 @@ struct Algo {
 } algos[] = {
 	{burstsort, "bs", "burstsort"},
 	{sqsort, "qs", "string quicksort"},
+	{msd_radixsort_super, "rss", "msd radixsort with super alphabet"},
 	{msd_radixsort, "rs", "msd radixsort"},
 	{merge_sort, "ms", "merge sort"},
 	{stdsort, "std", "std::sort"}
