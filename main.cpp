@@ -118,6 +118,7 @@ int main(int argc, char* argv[])
 //		for(size_t i=0; i<cnt; ++i) cout<<ptrs[i]<<'\n';
 
 		size_t dp=0;
+		size_t prevd=0;
 		for(size_t i=1; i<cnt; ++i) {
 			size_t l=0;
 			if (lcpCmp(ptrs[i],ptrs[i-1], &l)) {
@@ -126,8 +127,12 @@ int main(int argc, char* argv[])
 					cout<<j<<' '<<ptrs[j]<<'\n';
 				abort();
 			}
-			dp += l;
+			dp += max(l, prevd);
+			if (strlen((char*)ptrs[i-1])!=l) ++dp;
+			prevd = l;
 		}
+		dp += prevd;
+		if (strlen((char*)ptrs[cnt-1])!=prevd) ++dp;
 		cout<<"dp: "<<dp<<'\n';
 
 		delete[] buf;
