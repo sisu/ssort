@@ -37,10 +37,9 @@ uchar** splitString(uchar* str, size_t len, size_t* pcnt) {
 	size_t cnt=0;
 	while(1) {
 //		while(cur<str+len && *cur=='\n') ++cur;
-		if (cur==str+len) break;
+		if (cur>=str+len) break;
 		ptrs[cnt++] = cur;
-		uchar* end = (uchar*)strchr((char*)cur, '\n');
-		if (!end) break;
+		uchar* end = (uchar*)strchrnul((char*)cur, '\n');
 		*end = 0;
 		cur = end+1;
 	}
